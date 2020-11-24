@@ -80,14 +80,15 @@
     }
     \def\rechnrtext{Invoice No}
     \def\ustnrtext{VAT Reg No}
+    \def\geschaeftsfuehrertext{Gesch\"aftsf\"uhrer}
     \def\empftext{Customer:}
     \def\kontaktperstext{Contact}
     \def\anschrifttext{Postal address}
     \def\kontakttext{Contact}
-    \def\wwwtext{WWW:}
-    \def\emailtext{E-Mail:}
-    \def\teltext{Tel:}
-    \def\faxtext{Fax:}
+    \def\wwwtext{WWW}
+    \def\emailtext{E-Mail}
+    \def\teltext{Tel}
+    \def\faxtext{Fax}
     \def\mobiltext{Mobile:}
     \def\banktext{Bank details}
     \def\ibantext{IBAN:}
@@ -126,15 +127,16 @@
     }
     \def\rechnrtext{Rechnungsnummer}
     \def\ustnrtext{USt-IdNr.}
+    \def\geschaeftsfuehrertext{Gesch\"aftsf\"uhrer}
     \def\empftext{Leistungsempf\"anger:}
     \def\kontaktperstext{Kontaktperson}
     \def\anschrifttext{Postanschrift}
     \def\kontakttext{Kontaktinformation}
-    \def\wwwtext{WWW:}
-    \def\emailtext{E-Mail:}
-    \def\teltext{Tel:}
-    \def\faxtext{Fax:}
-    \def\mobiltext{Mobil:}
+    \def\wwwtext{WWW}
+    \def\emailtext{E-Mail}
+    \def\teltext{Tel}
+    \def\faxtext{Fax}
+    \def\mobiltext{Mobil}
     \def\banktext{Bankverbindung}
     \def\ibantext{IBAN:}
     \def\bictext{BIC:}
@@ -180,6 +182,9 @@
 \newcommand{\autor}[1]{\def\aut{#1}}
 \newcommand{\firmenname}[1]{\def\nameF{#1}}
 \newcommand{\firmenzusatz}[1]{\def\zusatzF{#1}}
+\newcommand{\firmengeschaeftsfuehrer}[1]{\def\geschaeftsfuehrerF{#1}}
+\newcommand{\firmengericht}[1]{\def\gerichtF{#1}}
+\newcommand{\firmenregisternummer}[1]{\def\registernummerF{#1}}
 \newcommand{\firmenanschrift}[1]{\def\anschriftF{#1}}
 \newcommand{\firmenort}[1]{\def\ortF{#1}}
 \newcommand{\firmenland}[1]{\def\landF{#1}}
@@ -419,19 +424,19 @@
   \begin{minipage}[b]{.5\textwidth}%
     \scriptsize\color{grau}\nameF \\[-.5em]
     \anschriftF\ $\cdot$\ \ortF \\[.5em]
-    \normalsize\color{black}\textbf{\nameK} \\[1em]
+    \normalsize\color{black}
+    \nameK{} \\[.3em]
     \ifthenelse{\equal{\zusatzK}{}}{}{\zusatzK \\[.3em]}
     \anschriftK \\[.3em]
     \ortK
     \ifthenelse{\equal{\landK}{}}{}{\\[.3em] \landK}
   \end{minipage}%
   \begin{minipage}[b]{.5\textwidth}%
-    \raggedleft{\color{graublau}\textbf{\textls{\rechnungtext}}\\[.5ex]
+    \raggedleft{
     \setlength\fboxsep{.7mm}
-    \fcolorbox{graublau}{white}{\color{black}\begin{tabular}[b]{@{}lr@{}}%
-      \datumtext&\rdat     
-      \ifthenelse{\equal{\rnr}{}}{}{\\\rechnrtext&\rnr}
-      \ifthenelse{\equal{\ust}{}}{}{\\\ustnrtext&\ust}
+    \fcolorbox{white}{white}{\color{black}\begin{tabular}[b]{@{}lr@{}}%
+      \textbf{\datumtext:}&\rdat
+      \ifthenelse{\equal{\rnr}{}}{}{\\\textbf{\rechnrtext:}&\rnr}
     \end{tabular}}}%
   \end{minipage}
   
@@ -450,6 +455,8 @@
     \vspace{15mm}
     
   }{}
+
+  \large{\textbf{\rechnungtext}}
 }% Ende AtBeginDocument
 
 
@@ -458,22 +465,25 @@
 \AtEndDocument{
   % Fusszeile
   \cfoot{%
-    \color{grau}
-    \begin{tabular}[t]{@{}l@{}}%
-      \textbf{\anschrifttext} \\[.1em]
+    \begin{tabular}[t]{@{}l@{}l@{}}%
+      \multicolumn{2}{@{}l@{}}{\textbf{\nameF}} \\[.1em]
       \ifthenelse{\equal{\zusatzF}{}}{}{\zusatzF \\}%
-      \ifthenelse{\equal{\anschriftF}{}}{}{\anschriftF \\}%
-      \ifthenelse{\equal{\ortF}{}}{}{\ortF \\}%
-      \ifthenelse{\equal{\landF}{}}{}{\landF \\}%
+      \geschaeftsfuehrertext: \ifthenelse{\equal{\geschaeftsfuehrerF}{}}{}{\geschaeftsfuehrerF \\}%
+      \ustnrtext: \ifthenelse{\equal{\ust}{}}{}{\ust\\}
+      \ifthenelse{\equal{\gerichtF}{}}{}{\gerichtF, }\ifthenelse{\equal{\registernummerF}{}}{}{\registernummerF\\}
     \end{tabular}%
     \hfill
     \begin{tabular}[t]{@{}l@{}l@{}}%
       \multicolumn{2}{@{}l@{}}{\textbf{\kontakttext}} \\[.1em]
-      \ifthenelse{\equal{\wwwF}{}}{}{\wwwtext&\ \wwwF \\}%
-      \ifthenelse{\equal{\emailF}{}}{}{\emailtext&\ \emailF \\}%
-      \ifthenelse{\equal{\telF}{}}{}{\teltext&\ \telF \\}%
-      \ifthenelse{\equal{\faxF}{}}{}{\faxtext&\ \faxF \\}%
-      \ifthenelse{\equal{\mobilF}{}}{}{\mobiltext&\ \mobilF}%
+      \ifthenelse{\equal{\anschriftF}{}}{}{\anschriftF \\}%
+      \ifthenelse{\equal{\ortF}{}}{}{\ortF \\}%
+      \ifthenelse{\equal{\landF}{}}{}{\landF \\}%
+
+      \ifthenelse{\equal{\wwwF}{}}{}{\wwwF \\}%
+      \ifthenelse{\equal{\emailF}{}}{}{\emailtext: \emailF \\}%
+      \ifthenelse{\equal{\telF}{}}{}{\teltext: \telF \\}%
+      \ifthenelse{\equal{\faxF}{}}{}{\faxtext: \faxF \\}%
+      \ifthenelse{\equal{\mobilF}{}}{}{\mobiltext: \mobilF}%
     \end{tabular}%
     \hfill
     \begin{tabular}[t]{@{}l@{}l@{}}%
