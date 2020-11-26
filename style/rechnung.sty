@@ -113,6 +113,7 @@
     \def\nettosumtext{Net}
     \def\usttext{VAT}
     \def\bruttosumtext{Total amount}
+    \def\gesamtsumtext{Total amount}
     \def\geztext{Already paid}
     \def\resttext{Remaining amount}
   }{
@@ -160,6 +161,7 @@
     \def\nettosumtext{Summe Netto}
     \def\usttext{Umsatzsteuer}
     \def\bruttosumtext{Summe Brutto}
+    \def\gesamtsumtext{Gesamtsumme}
     \def\geztext{Bereits gezahlt}
     \def\resttext{Zu zahlender Restbetrag}
   }
@@ -276,6 +278,27 @@
   
   \vspace{5mm}
   
+}
+\newcommand*\gesamtbetragsteuerfrei[1]{
+  \nprounddigits{2}
+  \FPdiv\rsumprint\rsum{3}
+  \ifthenelse{\equal{#1}{}}{
+  \begin{tabularx}{\textwidth}{@{}X r r@{}}
+    \hline
+    \platz & \multicolumn{1}{r}{\textbf{\gesamtsumtext}} & \textbf{\numprint{\FPprint\rsumprint}\ \euro}
+  \end{tabularx}}{%
+  \FPset\gez{#1}%
+  \FPsub\rest\rsumprint\gez
+  \begin{tabularx}{\textwidth}{@{}X r r@{}}
+    \hline
+    \platz & \multicolumn{1}{r}{\textbf{\gesamtsumtext}} & \textbf{\numprint{\FPprint\rsumprint}\ \euro} \\[5mm]
+    \platz & \multicolumn{1}{r}{\geztext} & \numprint{\FPprint\gez}\ \euro \\
+    \cline{2-3}
+    \platz & \multicolumn{1}{r}{\textbf{\resttext}} & \textbf{\numprint{\FPprint\rest}\ \euro}
+  \end{tabularx}}
+  \npnoround
+
+  \vspace{5mm}
 }
 
 % Leistung Tabelleneintrag
