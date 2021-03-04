@@ -95,8 +95,8 @@
     \def\bictext{SWIFT:}
     \def\bankorttext{Bank:}
     \def\leistungtext{Description}
-    \def\zeitpunkttexta{}
-    \def\zeitpunkttextb{Realization}
+    \def\zeitpunkttexta{Realization}
+    \def\zeitpunkttextb{}
     \def\stundentext{Hours}
     \def\satztexta{Hourly}
     \def\satztextb{rate}
@@ -143,7 +143,7 @@
     \def\bictext{BIC:}
     \def\bankorttext{Bank:}
     \def\leistungtext{Leistungsbeschreibung}
-    \def\zeitpunkttexta{Zeitpunkt}
+    \def\zeitpunkttexta{Zeitraum}
     \def\zeitpunkttextb{der Leistung}
     \def\stundentext{Stunden}
     \def\satztexta{Stunden-}
@@ -317,15 +317,14 @@
   \xdef\leistC{\c}%
   \FPadd\rsum\rsum\c
   \xdef\rsum{\rsum}%
-  {#1}&{#2}&{\numprint{\FPprint\leistA}}&{\numprint{\FPprint\leistB}\ \euro}&{\numprint{\FPprint\leistC}\ \euro}\\
+  {#1\newline{}\zeitpunkttexta: #2\newline{}{\numprint{\FPprint\leistA}} \stundentext{} à {\numprint{\FPprint\leistB}\ \euro}}&{\numprint{\FPprint\leistC}\ \euro}\\
 }
 
 % Leistungstabelle
 \NewEnviron{tableistung}{%
   \def\temp{%
-    \begin{tabularx}{\textwidth}{@{}>\platz X c c c r@{}}
-     &\textbf{\zeitpunkttexta}& & \textbf{\satztexta} & \\[-1.5ex]
-    \textbf{\leistungtext} & \textbf{\zeitpunkttextb} & \textbf{\stundentext} & \textbf{\satztextb} & \multicolumn{1}{c}{\textbf{\betragtext}} \\
+    \begin{tabularx}{\textwidth}{@{}>\platz X r@{}}
+    \textbf{\leistungtext} & \multicolumn{1}{c}{\textbf{\betragtext}} \\
     \hline}%
     \expandafter\temp\BODY%
     \end{tabularx}%
